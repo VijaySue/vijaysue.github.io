@@ -1,1 +1,264 @@
-Hello
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico">
+    <title>致武旻的情书</title>
+    <style>
+        /* 加载自定义字体 */
+        @font-face {
+            font-family: 'CustomZiti';
+            src: url('font.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('bg2.png'); /* 页面背景图片 */
+            background-repeat: no-repeat; /* 不重复背景图片 */
+            background-size: cover; /* 自适应大小 */
+            background-position: center; /* 居中显示 */
+            color: #333;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* 图片容器 */
+        #image-container {
+            width: 100%; /* 图片宽度占满屏幕 */
+            height: 50vh; /* 图片高度为屏幕的 1/2 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 图片样式 */
+        #play-image {
+            max-width: 80%; /* 图片最大宽度为屏幕的 80% */
+            max-height: 80%; /* 图片最大高度为屏幕的 80% */
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        #play-image:hover {
+            transform: scale(1.1); /* 鼠标悬停时放大图片 */
+        }
+
+        /* 角落装饰图片 */
+        .corner-image {
+            position: absolute;
+            opacity: 0.7;
+        }
+
+        #top-left {
+            top: 20px;
+            left: 20px;
+            width: 70px;
+            height: 70px;
+        }
+
+        #top-right {
+            top: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+        }
+
+        #bottom-left {
+            bottom: 20px;
+            left: 20px;
+            width: 80px;
+            height: 80px;
+        }
+
+        #bottom-right {
+            bottom: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+        }
+
+        /* 视频容器（默认隐藏） */
+        #video-container {
+            display: none; /* 默认隐藏视频 */
+            position: fixed; /* 全屏定位 */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black; /* 背景为黑色 */
+            z-index: 1000; /* 确保视频在最上层 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 视频样式 */
+        #love-video {
+            width: 100%;
+            object-fit: contain; /* 视频包含在容器内 */
+        }
+
+        /* 情书部分（默认隐藏） */
+        #letter-container {
+            display: none; /* 默认隐藏情书 */
+            width: 100%; /* 情书部分占满屏幕宽度 */
+            padding: 20px;
+            box-sizing: border-box; /* 确保 padding 不影响宽度 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* 确保至少占满视口高度 */
+            position: relative;
+        }
+
+        .container {
+            background-image: url('bg.png'); /* 情书背景图片 */
+            background-repeat: no-repeat; /* 不重复背景图片 */
+            background-size: cover; /* 自适应大小 */
+            background-position: center; /* 居中显示 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            font-family: 'CustomZiti', sans-serif; /* 自定义字体 */
+            color: #333; /* 文字颜色 */
+        }
+
+        h1 {
+            color: #e74c3c;
+            font-size: 24px; /* 手机屏幕上标题字体大小 */
+            text-decoration: underline; /* 下划线 */
+        }
+
+        p {
+            font-size: 16px; /* 手机屏幕上正文字体大小 */
+            line-height: 1.6;
+            text-decoration: underline; /* 下划线 */
+        }
+
+        /* GIF动图样式 */
+        #gif-image {
+            position: absolute;
+            bottom: 20px;
+            right: 10px;
+            width: 60px;
+        }
+
+        /* 响应式设计：针对小屏幕（手机） */
+        @media (max-width: 600px) {
+            #image-container {
+                height: 40vh; /* 手机屏幕上图片高度稍小 */
+            }
+
+            #play-image {
+                max-width: 90%; /* 手机屏幕上图片更大 */
+                max-height: 90%;
+            }
+
+            .corner-image {
+                width: 100px;
+                height: 100px;
+            }
+
+            .container {
+                padding: 15px; /* 手机屏幕上情书部分内边距稍小 */
+            }
+
+            h1 {
+                font-size: 20px; /* 手机屏幕上标题字体更小 */
+            }
+
+            p {
+                font-size: 14px; /* 手机屏幕上正文字体更小 */
+            }
+
+            #gif-image {
+                width: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 角落装饰图片 -->
+    <img id="top-left" class="corner-image" src="corner-top-left.png" alt="Top Left Corner">
+    <img id="top-right" class="corner-image" src="corner-top-right.png" alt="Top Right Corner">
+    <img id="bottom-left" class="corner-image" src="corner-bottom-left.png" alt="Bottom Left Corner">
+    <img id="bottom-right" class="corner-image" src="corner-bottom-right.png" alt="Bottom Right Corner">
+
+    <!-- 图片部分 -->
+    <div id="image-container">
+        <img id="play-image" src="play-button.png" alt="播放视频">
+    </div>
+
+    <!-- 视频部分（默认隐藏） -->
+    <div id="video-container" style="display: none;">
+        <video id="love-video" controls>
+            <source src="love-letter.mp4" type="video/mp4">
+            <source src="love-letter.ogg" type="video/ogg">
+            您的浏览器不支持视频播放功能，请升级浏览器。
+        </video>
+    </div>
+
+    <!-- 情书部分（默认隐藏） -->
+    <div id="letter-container" style="display: none;">
+        <div class="container">
+            <h1>致武旻</h1>
+            <p>亲爱的小旻，展信佳。</p>
+            <p>“今夕何夕，见此良人。”</p>
+            <p>与你相逢，方知人间美好。</p>
+            <p>“有美一人，清扬婉兮。”</p>
+            <p>你的美，令我心动。</p>
+            <p>“投我以木桃，报之以琼瑶。”</p>
+            <p>你的关怀我铭记于心，定以深情相报。</p>
+            <p>“愿得一心人，白首不相离。”</p>
+            <p>盼与你携手，走过岁岁年年。</p>
+            <p>爱你的苏伟杰</p>
+            <img id="gif-image" src="inner-gif.gif" alt="GIF Animation">
+        </div>
+    </div>
+
+    <!-- 音频部分（默认隐藏） -->
+    <audio id="recording-audio" src="recording.m4a"></audio>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const playImage = document.getElementById("play-image");
+            const videoContainer = document.getElementById("video-container");
+            const letterContainer = document.getElementById("letter-container");
+            const video = document.getElementById("love-video");
+            const audio = document.getElementById("recording-audio");
+
+            // 点击图片后显示视频并播放
+            playImage.addEventListener("click", function () {
+                videoContainer.style.display = "flex"; // 显示视频
+                video.play(); // 播放视频
+                playImage.style.display = "none"; // 隐藏图片
+            });
+
+            // 监听视频结束事件
+            video.addEventListener("ended", function () {
+                videoContainer.style.display = "none"; // 隐藏视频
+                letterContainer.style.display = "flex"; // 显示情书
+
+                // 设置定时器，在视频结束两秒后播放音频
+                setTimeout(function() {
+                    audio.play();
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
